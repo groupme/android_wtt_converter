@@ -39,7 +39,6 @@ end
 
 
 filename = ARGV[0]
-  puts "#{File.absolute_path(filename)}"
 
 if (filename != nil)
 
