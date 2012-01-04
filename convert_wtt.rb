@@ -17,13 +17,14 @@ def convertFile(filename, savePath = nil)
 
   doc = XmlSimple.xml_in(contents)
 
-  output = ""
+  output = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n"
 
   doc['content']['item'].each do |s|
     key = s['key']
     val = s['content'].gsub("\n", "\\n")
-    output += "<string name=\"#{key}\">#{val}</string>\n"
+    output += "\t<string name=\"#{key}\">#{val}</string>\n"
   end
+  output += "</resources>"
 
   m = File.basename(filename).split("_")
   outputFilename = "strings_#{m[0]}_#{m[1]}.xml"
