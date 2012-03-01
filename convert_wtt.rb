@@ -3,10 +3,6 @@
 require 'rubygems'
 require 'xmlsimple'
 
-
-
-
-
 def convertFile(filename, savePath = nil)
   puts "Converting #{File.basename(filename)}"
 
@@ -23,6 +19,7 @@ def convertFile(filename, savePath = nil)
     if (s['content'] != nil)
       key = s['key']
       val = s['content'].gsub("\n", "\\n")
+      val = val.gsub(/([^\\])'/, '\1\\\\\'')
       output += "\t<string name=\"#{key}\">#{val}</string>\n"
     end
   end
