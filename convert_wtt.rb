@@ -55,7 +55,7 @@ if (filename != nil)
     end
     Dir.foreach(filename) do |file|
       file = File.join(filename, file)
-      if ( file != nil && /xml$/.match(file.to_s) )
+      if ( file != nil && File.file?(file) && /xml$/.match(file.to_s) )
         convertFile(file.to_s, saveDir.to_s)
       end
     end
