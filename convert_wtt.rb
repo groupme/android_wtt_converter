@@ -20,9 +20,11 @@ def convertFile(filename, savePath = nil)
   output = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n"
 
   doc['content']['item'].each do |s|
-    key = s['key']
-    val = s['content'].gsub("\n", "\\n")
-    output += "\t<string name=\"#{key}\">#{val}</string>\n"
+    if (s['content'] != nil)
+      key = s['key']
+      val = s['content'].gsub("\n", "\\n")
+      output += "\t<string name=\"#{key}\">#{val}</string>\n"
+    end
   end
   output += "</resources>"
 
@@ -46,12 +48,14 @@ if (filename != nil)
   if (File.file? filename)
     convertFile(filename)
   elsif (File.directory? filename)
+    puts "is directory"
     saveDir = File.join(filename, "output")
     if (!File.exists?(saveDir))
       Dir.mkdir(saveDir)
     end
     Dir.foreach(filename) do |file|
-      if ( file != nil && File.file?(file.to_s) && /xml$/.match(file.to_s) )
+      file = File.join(filename, file)
+      if ( file != nil && /xml$/.match(file.to_s) )
         convertFile(file.to_s, saveDir.to_s)
       end
     end
